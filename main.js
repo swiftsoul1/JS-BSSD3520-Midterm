@@ -1,20 +1,47 @@
 'use strict';
 
+/*used this example for detecting object changes
+https://www.codegrepper.com/code-examples/javascript/how+to+listen+for+variable+changes+js*/
+//changed example to use my variables and to detect when all variables are filled
+let character = {
+    name: '',
+    class: '',
+    race: '',
+    strength: 0,
+    dextery: 0,
+    constitution: 0,
+    intelligence: 0,
+    wisdom: 0,
+    charisma: 0,
+  checkFilled() {
+    //check if the user has filled in all the fields
+  },
+  get name() {
+    return this.name;
+  },
+  set name(value) {
+    this.name = value;
+    this.checkFilled();
+  }
+}
+/*end object*/
+
 document.addEventListener('DOMContentLoaded', () => {
     //dnd classes
     const classes =['fighter', 'cleric', 'warlock', 'druid', 'paladin', 'sorceror', 'wizard', 'rogue'];
     //dnd races
     const races = ['gnome', 'dwarf', 'human', 'orc', 'halfling', 'elf', 'teifling'];
-    
+    //skills
+    const skills = ['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma']
     createSelect(classes, 'classes');
     createSelect(races, 'races');
-    createNumInput('Strength')
+    createNumInput('Strength');
 });
 
 //attempting to use functions as 'fragments'
 //numInput for skills
 const createNumInput = (name) => {
-     //container
+    //container
     let div = document.createElement('div');
         div.id = name;
         div.classList.add('row');
@@ -23,6 +50,13 @@ const createNumInput = (name) => {
         div.classList.add('p-5');
         div.classList.add('m-2');
     document.getElementById('content').append(div);
+    //label
+    let lab = document.createElement('label');
+        lab.innerHTML = name;
+        lab.id = name;
+        lab.classList.add('p-0');
+        lab.classList.add('m-0');
+    div.append(lab);
     //input
     let input = document.createElement('input');
         input.type = 'number';
@@ -37,9 +71,9 @@ const createNumInput = (name) => {
         roll.innerHTML = 'roll';
         roll.classList.add('button-primary');
         roll.addEventListener('click', () => {
-            //roll 3 dice, as the rules dictate
-            let roll = (Math.floor(Math.random() * 6) + 1) + (Math.floor(Math.random() * 6) + 1) + (Math.floor(Math.random() * 6) + 1);  
-            input.value = roll;
+            //roll 3 dice, as the rules dictate n add them up
+            let rNum = (Math.floor(Math.random() * 6) + 1) + (Math.floor(Math.random() * 6) + 1) + (Math.floor(Math.random() * 6) + 1);  
+            input.value = rNum;
         });
      div.append(roll);
     //submit button
