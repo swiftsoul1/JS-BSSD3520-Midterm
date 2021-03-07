@@ -15,7 +15,6 @@ let character = {
     charisma: 0,
     checkFilled() {
         //check if the user has filled in all the fields
-        console.log("we are checking");
         if(this.name !== '' && this.class !== '' && this.race !== '' && this.strength >= 3 && this.constitution >= 3 && this.dexterity >= 3 && this.intelligence >= 3 && this.wisdom >= 3 && this.charisma >= 3){
            createDetailPage();
         }
@@ -41,54 +40,47 @@ let character = {
         this.race = value;
         this.checkFilled();
     },
-    //wouldve been more difficult to hard code each skill
-    //skills should probably be an array but thered be no way to 
-    //identify the index in currect structure
-    getSkill(name) {
-        switch(name){
-            case 'Strength':
-                return this.strength;
-            case 'Constitution':
-                return this.constiution;
-            case 'Dexterity':
-                return this.dexterity;
-            case 'Intelligence':
-                return this.intelligence;
-            case 'Wisdom':
-                return this.wisdom;
-            case 'Charisma':
-                return this.charisma;
-            default:
-                return "error geting" + name;       
-        }
+    get getStrength() {
+        return this.strength;
     },
-    setSkill(name, value) {
-        switch(name){
-            case 'Strength':
-                this.strength = value;
-                this.checkFilled();
-                break;
-            case 'Constitution':
-                this.constitution = value;
-                this.checkFilled();
-                break;
-            case 'Dexterity':
-                this.dexterity = value;
-                this.checkFilled();
-                break;
-            case 'Intelligence':
-                this.intelligence = value;
-                this.checkFilled();
-                break;
-            case 'Wisdom':
-                this.wisdom = value;
-                this.checkFilled();
-                break;
-            case 'Charisma':
-                this.charisma = value;
-                this.checkFilled();
-                break;       
-        }
+    set setStrength(value) {
+        this.strength = value;
+        this.checkFilled();
+    },
+    get getDexterity() {
+        return this.dexterity;
+    },
+    set setDexterity(value) {
+        this.dexterity = value;
+        this.checkFilled();
+    },
+    get getConstitution() {
+        return this.constitution;
+    },
+    set setConstitution(value) {
+        this.constitution = value;
+        this.checkFilled();
+    },
+    get getIntelligence() {
+        return this.intelligence;
+    },
+    set setIntelligence(value) {
+        this.intelligence = value;
+        this.checkFilled();
+    },
+    get getWisdom() {
+        return this.wisdom;
+    },
+    set setWisdom(value) {
+        this.wisdom = value;
+        this.checkFilled();
+    },
+    get getCharisma() {
+        return this.charisma;
+    },
+    set setCharisma(value) {
+        this.charisma = value;
+        this.checkFilled();
     },
    
 }
@@ -121,17 +113,63 @@ const createDetailPage = () => {
     //container
     let div = containerDiv(name);
     document.getElementById('content').append(div);
-    //label
-    let lab = makeLabel(name);
-    div.append(lab);
-    //stats
-    let br = document.createElement("br");
-    div.append(br.cloneNode(false));
     
+    //stats
+    let div2 = containerDiv(name);
     let p = document.createElement('p');
-        p.innerHTML = character.getName;
-    div.append(p);
+        p.innerHTML = 'name: ' + character.getName;
+    div2.append(p);
+    div.append(div2)
+    
+    div2 = containerDiv(name);
+    p = document.createElement('p');
+    p.innerHTML = 'race: ' + character.getRace;
+    div2.append(p);
+    div.append(div2);
+    
+    div2 = containerDiv(name);
+    p = document.createElement('p');
+    p.innerHTML = 'class: ' + character.getClass;
+    div2.append(p);
+    div.append(div2);
+    
+    div2 = containerDiv(name);
+    p = document.createElement('p');
+    p.innerHTML = 'strength: ' + character.getStrength;
+    div2.append(p);
+    div.append(div2);
+    
+    div2 = containerDiv(name);
+    p = document.createElement('p');
+    p.innerHTML = 'dexterity: ' + character.getDexterity;
+    div2.append(p);
+    div.append(div2);
+    
+    div2 = containerDiv(name);
+    p = document.createElement('p');
+        p.innerHTML = 'constitution: ' + character.getConstitution;
+    div2.append(p);
+    div.append(div2)
+    
+    div2 = containerDiv(name);
+    p = document.createElement('p');
+    p.innerHTML = 'intelligence: ' + character.getIntelligence;
+    div2.append(p);
+    div.append(div2);
+    
+    div2 = containerDiv(name);
+    p = document.createElement('p');
+    p.innerHTML = 'wisdom: ' + character.getWisdom;
+    div2.append(p);
+    div.append(div2);
+    
+    div2 = containerDiv(name);
+    p = document.createElement('p');
+    p.innerHTML = 'charisma: ' + character.getCharisma;
+    div2.append(p);
+    div.append(div2);
 }
+
 //text input
 const createNameInput = (name) => {
     //container
@@ -147,10 +185,7 @@ const createNameInput = (name) => {
         input.id = name;
     div.append(input);
     //submit button
-    let submit = document.createElement('button');
-        submit.id = name;
-        submit.innerHTML = 'submit';
-        submit.classList.add('button-primary');
+    let submit = submitBtn(name);
         submit.addEventListener('click', () => {
             console.log(input.value)
             if(input.value != ''){
@@ -191,13 +226,29 @@ const createNumInput = (name) => {
         });
      div.append(roll);
     //submit button
-    let submit = document.createElement('button');
-        submit.id = name;
-        submit.innerHTML = 'submit';
-        submit.classList.add('button-primary');
+    let submit = submitBtn(name);
         submit.addEventListener('click', () => {
             if(input.value >= 3 && input.value <= 18){
-                character.setSkill(name,input.value);
+                switch(name){
+                    case 'Strength':
+                        character.setStrength = input.value;
+                        break;
+                    case 'Constitution':
+                        character.setConstitution = input.value;
+                        break;
+                    case 'Dexterity':
+                        character.setDexterity = input.value;
+                        break;
+                    case 'Intelligence':
+                        character.setIntelligence = input.value;
+                        break;
+                    case 'Wisdom':
+                        character.setWisdom = input.value;
+                        break;
+                    case 'Charisma':
+                        character.setCharisma = input.value;
+                        break;      
+                }
                 removeElement(name);
             } else {
                 alert("make sure your entry is between 3-18");
@@ -230,10 +281,7 @@ const createSelect = (options, name) => {
     div.append(sel);
     
     //submit button
-    let submit = document.createElement('button');
-        submit.id = name;
-        submit.innerHTML = 'submit';
-        submit.classList.add('button-primary');
+    let submit = submitBtn(name);
         submit.addEventListener('click', () => {
             if(name == 'races'){
                 character.setRace = sel.value;
@@ -243,6 +291,15 @@ const createSelect = (options, name) => {
             removeElement(name);
         });
      div.append(submit);
+}
+//submit btn
+const submitBtn = (name) => {
+     let submit = document.createElement('button');
+        submit.id = name;
+        submit.innerHTML = 'submit';
+        submit.classList.add('btn');
+        submit.classList.add('btn-primary');
+    return submit;
 }
 //container div
 const containerDiv = (name) => {
