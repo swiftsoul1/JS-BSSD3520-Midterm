@@ -93,24 +93,13 @@ https://www.codegrepper.com/code-examples/javascript/how+to+listen+for+variable+
 let character = newCharacter();
 
 document.addEventListener('DOMContentLoaded', () => {
-    createStartPage();
+    startInput();
 });
 
 //attempting to use functions as 'fragments'
 //start page
-const createStartPage =() => {
-    //dnd classes
-    const classes =['fighter', 'cleric', 'warlock', 'druid', 'paladin', 'sorceror', 'wizard', 'rogue'];
-    //dnd races
-    const races = ['gnome', 'dwarf', 'human', 'orc', 'halfling', 'elf', 'teifling'];
-    //skills
-    const skills = ['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'];
+const startInput =() => {
     createNameInput('name');
-    createSelect(races, 'races');
-    createSelect(classes, 'classes');
-    for(let i = 0; i < skills.length; i++){
-        createNumInput(skills[i]);
-    }
 }
 
 //detail page
@@ -152,7 +141,7 @@ const createDetailPage = () => {
             removeElement('detail');
             document.body.style.backgroundImage = "";
             character = newCharacter();
-            createStartPage();
+            startInput();
         });
     div3.append(refresh);
     div.append(div3);
@@ -179,8 +168,11 @@ const createNameInput = (name) => {
     let submit = submitBtn(name);
         submit.addEventListener('click', () => {
             if(input.value != ''){
+                //dnd races
+                const races = ['gnome', 'dwarf', 'human', 'orc', 'halfling', 'elf', 'teifling'];
                 character.setName = input.value;
                 removeElement(name);
+                createSelect(races, 'races');
             } else {
                 alert("make sure u enter a value");
             }
@@ -276,9 +268,17 @@ const createSelect = (options, name) => {
     let submit = submitBtn(name);
         submit.addEventListener('click', () => {
             if(name == 'races'){
+                //dnd classes
+                const classes =['fighter', 'cleric', 'warlock', 'druid', 'paladin', 'sorceror', 'wizard', 'rogue'];
                 character.setRace = sel.value;
+                createSelect(classes, 'classes');
             } else if(name == 'classes') {
+                //skills
+                const skills = ['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'];
                 character.setClass = sel.value;
+                for(let i = 0; i < skills.length; i++){
+                    createNumInput(skills[i]);
+                }
             }
             removeElement(name);
         });
