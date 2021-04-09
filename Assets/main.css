@@ -1,0 +1,18 @@
+.app{
+    background-color: lightgray
+}
+.bg-gray{
+    background-color: lightgray
+}
+.nav-link{
+    color: lightgray
+}
+.nav-link:hover{
+    color:gray
+}
+.card{
+    background-color: darkgray
+}
+.fixed-height-1{
+    height: 15rem !important
+}
